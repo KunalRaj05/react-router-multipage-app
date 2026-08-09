@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>React Router Multi-Page App</title>
 
+  <!-- React -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- React Router -->
   <script src="https://unpkg.com/react-router-dom@6.28.0/dist/umd/react-router-dom.development.js"></script>
+
+  <!-- Babel -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <style>
@@ -24,14 +30,14 @@
 
     nav {
       background: #20232a;
-      padding: 20px;
+      padding: 18px;
       text-align: center;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin: 0 20px;
+      margin: 0 15px;
       font-size: 18px;
       font-weight: bold;
     }
@@ -41,17 +47,26 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 40px auto;
-      padding: 40px;
-      background: white;
-      border-radius: 15px;
+      padding: 20px;
       text-align: center;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-top: 25px;
     }
 
     h1 {
       color: #2563eb;
+    }
+
+    h2 {
+      color: #333;
     }
 
     p {
@@ -59,22 +74,18 @@
       line-height: 1.6;
     }
 
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 22px;
+    button {
       background: #2563eb;
       color: white;
-      text-decoration: none;
+      border: none;
+      padding: 12px 20px;
       border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
     }
 
-    footer {
-      margin-top: 50px;
-      background: #20232a;
-      color: white;
-      padding: 20px;
-      text-align: center;
+    button:hover {
+      background: #1d4ed8;
     }
   </style>
 </head>
@@ -92,74 +103,87 @@
       Link
     } = ReactRouterDOM;
 
+
+    // Home Page
+    function Home() {
+      return (
+        <div className="container">
+          <div className="card">
+            <h1>Welcome to Home Page</h1>
+            <p>
+              This is the Home page of our React Router Multi-Page App.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+
+    // About Page
+    function About() {
+      return (
+        <div className="container">
+          <div className="card">
+            <h1>About Us</h1>
+            <p>
+              This page demonstrates navigation using React Router.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+
+    // Services Page
+    function Services() {
+      return (
+        <div className="container">
+          <div className="card">
+            <h1>Our Services</h1>
+
+            <p>Web Development</p>
+            <p>React Development</p>
+            <p>Frontend Development</p>
+          </div>
+        </div>
+      );
+    }
+
+
+    // Contact Page
+    function Contact() {
+      return (
+        <div className="container">
+          <div className="card">
+            <h1>Contact Us</h1>
+
+            <p>Email: example@gmail.com</p>
+            <p>Phone: +91 9876543210</p>
+          </div>
+        </div>
+      );
+    }
+
+
+    // Navigation Bar
     function Navigation() {
       return (
         <nav>
+
           <Link to="/">Home</Link>
+
           <Link to="/about">About</Link>
+
+          <Link to="/services">Services</Link>
+
           <Link to="/contact">Contact</Link>
+
         </nav>
       );
     }
 
-    function Home() {
-      return (
-        <div className="container">
-          <h1>Welcome to React Router App</h1>
 
-          <p>
-            This is the Home page.
-          </p>
-
-          <p>
-            This project demonstrates navigation between
-            multiple pages using React Router.
-          </p>
-
-          <Link className="button" to="/about">
-            Go to About
-          </Link>
-        </div>
-      );
-    }
-
-    function About() {
-      return (
-        <div className="container">
-          <h1>About Us</h1>
-
-          <p>
-            This page is created using React and React Router.
-          </p>
-
-          <p>
-            React Router allows users to navigate between
-            different pages without reloading the application.
-          </p>
-
-          <Link className="button" to="/contact">
-            Go to Contact
-          </Link>
-        </div>
-      );
-    }
-
-    function Contact() {
-      return (
-        <div className="container">
-          <h1>Contact Us</h1>
-
-          <p>Email: example@gmail.com</p>
-
-          <p>Phone: +91 9876543210</p>
-
-          <Link className="button" to="/">
-            Back to Home
-          </Link>
-        </div>
-      );
-    }
-
+    // Main App
     function App() {
       return (
         <HashRouter>
@@ -168,22 +192,34 @@
 
           <Routes>
 
-            <Route path="/" element={<Home />} />
+            <Route
+              path="/"
+              element={<Home />}
+            />
 
-            <Route path="/about" element={<About />} />
+            <Route
+              path="/about"
+              element={<About />}
+            />
 
-            <Route path="/contact" element={<Contact />} />
+            <Route
+              path="/services"
+              element={<Services />}
+            />
+
+            <Route
+              path="/contact"
+              element={<Contact />}
+            />
 
           </Routes>
-
-          <footer>
-            React Router Multi-Page App © 2026
-          </footer>
 
         </HashRouter>
       );
     }
 
+
+    // Render App
     ReactDOM
       .createRoot(document.getElementById("root"))
       .render(<App />);
