@@ -3,11 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>React Router Multi-Page App</title>
 
+  <!-- React -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+
+  <!-- React DOM -->
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/react-router-dom@6.28.0/dist/umd/react-router-dom.development.js"></script>
+
+  <!-- React Router -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/6.28.0/react-router-dom.development.js"></script>
+
+  <!-- Babel -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <style>
@@ -24,16 +32,16 @@
 
     nav {
       background: #20232a;
-      padding: 18px;
+      padding: 20px;
       text-align: center;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
-      font-size: 17px;
+      margin: 0 18px;
       font-weight: bold;
+      font-size: 17px;
     }
 
     nav a:hover {
@@ -43,7 +51,7 @@
     .container {
       max-width: 900px;
       margin: 40px auto;
-      padding: 30px;
+      padding: 35px;
       background: white;
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -59,33 +67,22 @@
       line-height: 1.6;
     }
 
-    .card-grid {
+    .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
-      margin-top: 25px;
+      margin-top: 30px;
     }
 
     .card {
-      padding: 20px;
       background: #f1f5f9;
+      padding: 20px;
       border-radius: 10px;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 22px;
-      background: #2563eb;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
     }
 
     footer {
       text-align: center;
-      padding: 20px;
-      margin-top: 40px;
+      padding: 25px;
       color: #666;
     }
   </style>
@@ -104,7 +101,8 @@
       Link
     } = ReactRouterDOM;
 
-    function Navigation() {
+
+    function Navbar() {
       return (
         <nav>
           <Link to="/">Home</Link>
@@ -115,82 +113,101 @@
       );
     }
 
+
     function Home() {
       return (
         <div className="container">
-          <h1>Welcome to My React App</h1>
+
+          <h1>React Router Multi-Page App</h1>
+
           <p>
-            This is the Home page of my React Router Multi-Page App.
+            Welcome to my React Router project.
           </p>
 
-          <div className="card-grid">
+          <p>
+            This application demonstrates navigation between
+            multiple pages using React Router.
+          </p>
+
+          <div className="cards">
+
             <div className="card">
               <h2>React</h2>
               <p>Built using React.</p>
             </div>
 
             <div className="card">
-              <h2>Router</h2>
-              <p>Navigation is handled using React Router.</p>
+              <h2>Routing</h2>
+              <p>Navigation using React Router.</p>
             </div>
 
             <div className="card">
               <h2>Responsive</h2>
-              <p>The application works on different screen sizes.</p>
+              <p>Works on different screen sizes.</p>
             </div>
+
           </div>
+
         </div>
       );
     }
+
 
     function About() {
       return (
         <div className="container">
+
           <h1>About Page</h1>
+
           <p>
-            This project demonstrates multi-page navigation using
-            React Router.
+            This is the About page of the application.
           </p>
+
           <p>
-            It contains multiple routes such as Home, About,
-            Services and Contact.
+            The project demonstrates how React Router
+            can be used to create multiple pages.
           </p>
+
         </div>
       );
     }
 
+
     function Services() {
       return (
         <div className="container">
+
           <h1>Services Page</h1>
 
-          <div className="card-grid">
+          <div className="cards">
+
             <div className="card">
               <h2>Web Development</h2>
-              <p>Modern and responsive websites.</p>
+              <p>Modern responsive websites.</p>
             </div>
 
             <div className="card">
               <h2>React Development</h2>
-              <p>Interactive applications using React.</p>
+              <p>Interactive React applications.</p>
             </div>
 
             <div className="card">
               <h2>UI Design</h2>
               <p>Clean and user-friendly interfaces.</p>
             </div>
+
           </div>
+
         </div>
       );
     }
 
+
     function Contact() {
       return (
         <div className="container">
+
           <h1>Contact Page</h1>
-          <p>
-            You can contact us for more information.
-          </p>
 
           <p>
             Email: example@email.com
@@ -199,36 +216,54 @@
           <p>
             Phone: +91 9876543210
           </p>
+
         </div>
       );
     }
 
+
     function App() {
       return (
-        <>
-          <Navigation />
+        <HashRouter>
+
+          <Navbar />
 
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/contact" element={<Contact />} />
+
+            <Route
+              path="/"
+              element={<Home />}
+            />
+
+            <Route
+              path="/about"
+              element={<About />}
+            />
+
+            <Route
+              path="/services"
+              element={<Services />}
+            />
+
+            <Route
+              path="/contact"
+              element={<Contact />}
+            />
+
           </Routes>
 
           <footer>
             React Router Multi-Page App © 2026
           </footer>
-        </>
+
+        </HashRouter>
       );
     }
 
-    ReactDOM.createRoot(
-      document.getElementById("root")
-    ).render(
-      <HashRouter>
-        <App />
-      </HashRouter>
-    );
+
+    ReactDOM
+      .createRoot(document.getElementById("root"))
+      .render(<App />);
 
   </script>
 
