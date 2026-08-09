@@ -1,229 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>React Router Multi-Page App</title>
-
-  <!-- React -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-
-  <!-- React Router -->
-  <script src="https://unpkg.com/react-router-dom@6.28.0/dist/umd/react-router-dom.development.js"></script>
-
-  <!-- Babel -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi Page Website</title>
 
   <style>
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
 
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
+      background: #f5f7fb;
       color: #222;
     }
 
     nav {
-      background: #20232a;
-      padding: 18px;
-      text-align: center;
+      background: #1e293b;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
-    nav a {
+    .logo {
       color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-size: 18px;
+      font-size: 24px;
       font-weight: bold;
     }
 
-    nav a:hover {
-      color: #61dafb;
+    .links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .container {
+    .links button {
+      background: transparent;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 6px;
+    }
+
+    .links button:hover {
+      background: #334155;
+    }
+
+    .page {
+      display: none;
       max-width: 1000px;
       margin: 40px auto;
       padding: 20px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .hero {
+      background: white;
+      padding: 50px 30px;
+      border-radius: 15px;
       text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+      color: #1e293b;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
     }
 
     .card {
       background: white;
-      padding: 30px;
+      padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      margin-top: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.07);
     }
 
-    h1 {
+    .card h3 {
+      margin-bottom: 10px;
       color: #2563eb;
     }
 
-    h2 {
-      color: #333;
+    .card p {
+      color: #64748b;
+      line-height: 1.5;
     }
 
-    p {
-      font-size: 18px;
-      line-height: 1.6;
+    .contact-box {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
     }
 
-    button {
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+
+    textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
       background: #2563eb;
       color: white;
       border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
+      padding: 12px 25px;
+      border-radius: 7px;
       cursor: pointer;
       font-size: 16px;
     }
 
-    button:hover {
+    .submit-btn:hover {
       background: #1d4ed8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #64748b;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        gap: 15px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .links button {
+        padding: 8px 10px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div id="root"></div>
+  <nav>
+    <div class="logo">My Website</div>
 
-  <script type="text/babel">
+    <div class="links">
+      <button onclick="showPage('home')">Home</button>
+      <button onclick="showPage('about')">About</button>
+      <button onclick="showPage('services')">Services</button>
+      <button onclick="showPage('contact')">Contact</button>
+    </div>
+  </nav>
 
-    const {
-      HashRouter,
-      Routes,
-      Route,
-      Link
-    } = ReactRouterDOM;
+  <!-- HOME -->
+  <section id="home" class="page active">
+    <div class="hero">
+      <h1>Welcome to My Website</h1>
+      <p>
+        This is a simple multi-page website created using
+        HTML, CSS and JavaScript.
+      </p>
+    </div>
 
+    <div class="cards">
+      <div class="card">
+        <h3>Fast</h3>
+        <p>Simple and lightweight website with fast loading.</p>
+      </div>
 
-    // Home Page
-    function Home() {
-      return (
-        <div className="container">
-          <div className="card">
-            <h1>Welcome to Home Page</h1>
-            <p>
-              This is the Home page of our React Router Multi-Page App.
-            </p>
-          </div>
-        </div>
-      );
+      <div class="card">
+        <h3>Responsive</h3>
+        <p>The website works on mobile, tablet and desktop.</p>
+      </div>
+
+      <div class="card">
+        <h3>Easy</h3>
+        <p>Clean design that is easy to understand and use.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="page">
+    <div class="hero">
+      <h1>About Us</h1>
+      <p>
+        We create simple and user-friendly web experiences
+        using modern web technologies.
+      </p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Our Mission</h3>
+        <p>
+          To build useful, simple and responsive websites.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Our Vision</h3>
+        <p>
+          To make web development accessible and easy to learn.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="page">
+    <div class="hero">
+      <h1>Our Services</h1>
+      <p>
+        Explore the services we provide.
+      </p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Web Development</h3>
+        <p>Building modern and responsive websites.</p>
+      </div>
+
+      <div class="card">
+        <h3>UI Design</h3>
+        <p>Creating clean and attractive user interfaces.</p>
+      </div>
+
+      <div class="card">
+        <h3>Responsive Design</h3>
+        <p>Making websites work on all screen sizes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="page">
+    <div class="contact-box">
+      <h1>Contact Us</h1>
+
+      <input type="text" placeholder="Your Name">
+
+      <input type="email" placeholder="Your Email">
+
+      <textarea placeholder="Your Message"></textarea>
+
+      <button class="submit-btn" onclick="sendMessage()">
+        Send Message
+      </button>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 My Website. All Rights Reserved.
+  </footer>
+
+  <script>
+    function showPage(pageName) {
+      const pages = document.querySelectorAll(".page");
+
+      pages.forEach(function(page) {
+        page.classList.remove("active");
+      });
+
+      const selectedPage = document.getElementById(pageName);
+
+      if (selectedPage) {
+        selectedPage.classList.add("active");
+      }
+
+      window.scrollTo(0, 0);
     }
 
-
-    // About Page
-    function About() {
-      return (
-        <div className="container">
-          <div className="card">
-            <h1>About Us</h1>
-            <p>
-              This page demonstrates navigation using React Router.
-            </p>
-          </div>
-        </div>
-      );
+    function sendMessage() {
+      alert("Thank you! Your message has been submitted.");
     }
-
-
-    // Services Page
-    function Services() {
-      return (
-        <div className="container">
-          <div className="card">
-            <h1>Our Services</h1>
-
-            <p>Web Development</p>
-            <p>React Development</p>
-            <p>Frontend Development</p>
-          </div>
-        </div>
-      );
-    }
-
-
-    // Contact Page
-    function Contact() {
-      return (
-        <div className="container">
-          <div className="card">
-            <h1>Contact Us</h1>
-
-            <p>Email: example@gmail.com</p>
-            <p>Phone: +91 9876543210</p>
-          </div>
-        </div>
-      );
-    }
-
-
-    // Navigation Bar
-    function Navigation() {
-      return (
-        <nav>
-
-          <Link to="/">Home</Link>
-
-          <Link to="/about">About</Link>
-
-          <Link to="/services">Services</Link>
-
-          <Link to="/contact">Contact</Link>
-
-        </nav>
-      );
-    }
-
-
-    // Main App
-    function App() {
-      return (
-        <HashRouter>
-
-          <Navigation />
-
-          <Routes>
-
-            <Route
-              path="/"
-              element={<Home />}
-            />
-
-            <Route
-              path="/about"
-              element={<About />}
-            />
-
-            <Route
-              path="/services"
-              element={<Services />}
-            />
-
-            <Route
-              path="/contact"
-              element={<Contact />}
-            />
-
-          </Routes>
-
-        </HashRouter>
-      );
-    }
-
-
-    // Render App
-    ReactDOM
-      .createRoot(document.getElementById("root"))
-      .render(<App />);
-
   </script>
 
 </body>
