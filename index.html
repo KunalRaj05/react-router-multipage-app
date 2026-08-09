@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>React Router Multi-Page App</title>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- React Router -->
+  <script src="https://unpkg.com/react-router-dom@6.22.3/dist/umd/react-router-dom.development.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #222;
+    }
+
+    nav {
+      background: #20232a;
+      padding: 18px;
+      text-align: center;
+    }
+
+    nav h2 {
+      color: white;
+      margin: 0 0 15px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 8px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      background: #2563eb;
+    }
+
+    nav a.active {
+      background: #2563eb;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .hero {
+      background: white;
+      padding: 50px 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero h1 {
+      color: #2563eb;
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+      color: #2563eb;
+      margin-top: 0;
+    }
+
+    .contact-form {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0 15px;
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+
+    .contact-form textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    footer {
+      text-align: center;
+      background: #20232a;
+      color: white;
+      padding: 20px;
+      margin-top: 50px;
+    }
+
+    .not-found {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .not-found h1 {
+      font-size: 60px;
+      color: #dc2626;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    const {
+      HashRouter,
+      Routes,
+      Route,
+      NavLink,
+      useNavigate
+    } = ReactRouterDOM;
+
+
+    // Navigation Bar
+    function Navigation() {
+      return (
+        <nav>
+          <h2>React Router App</h2>
+
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "active" : ""
+            }
+          >
+            Home
+          </NavLink>
+
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              isActive ? "active" : ""
+            }
+          >
+            About
+          </NavLink>
+
+          <NavLink
+            to="/services"
+            className={({ isActive }) =>
+              isActive ? "active" : ""
+            }
+          >
+            Services
+          </NavLink>
+
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              isActive ? "active" : ""
+            }
+          >
+            Contact
+          </NavLink>
+        </nav>
+      );
+    }
+
+
+    // Home Page
+    function Home() {
+      return (
+        <div className="container">
+          <div className="hero">
+            <h1>Welcome to React Router App</h1>
+
+            <p>
+              This is a multi-page React application
+              created using React Router.
+            </p>
+
+            <p>
+              Use the navigation menu above to visit
+              different pages.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+
+    // About Page
+    function About() {
+      return (
+        <div className="container">
+          <div className="hero">
+            <h1>About Us</h1>
+
+            <p>
+              This application demonstrates routing
+              between multiple pages using React Router.
+            </p>
+
+            <p>
+              The application is responsive and works
+              on GitHub Pages.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+
+    // Services Page
+    function Services() {
+      return (
+        <div className="container">
+          <div className="hero">
+            <h1>Our Services</h1>
+
+            <div className="grid">
+
+              <div className="card">
+                <h3>Web Development</h3>
+                <p>
+                  Modern and responsive websites using
+                  HTML, CSS, JavaScript and React.
+                </p>
+              </div>
+
+              <div className="card">
+                <h3>React Development</h3>
+                <p>
+                  Building interactive applications
+                  using React components.
+                </p>
+              </div>
+
+              <div className="card">
+                <h3>UI Design</h3>
+                <p>
+                  Clean and user-friendly interfaces
+                  for web applications.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+
+    // Contact Page
+    function Contact() {
+
+      const [submitted, setSubmitted] = React.useState(false);
+
+      function handleSubmit(event) {
+        event.preventDefault();
+        setSubmitted(true);
+      }
+
+      return (
+        <div className="container">
+
+          <div className="contact-form">
+
+            <h1>Contact Us</h1>
+
+            {submitted && (
+              <p>
+                Message submitted successfully!
+              </p>
+            )}
+
+            <form onSubmit={handleSubmit}>
+
+              <label>Name</label>
+
+              <input
+                type="text"
+                placeholder="Enter your name"
+                required
+              />
+
+              <label>Email</label>
+
+              <input
+                type="email"
+                placeholder="Enter your email"
+                required
+              />
+
+              <label>Message</label>
+
+              <textarea
+                placeholder="Enter your message"
+                required
+              ></textarea>
+
+              <button type="submit">
+                Submit
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+      );
+    }
+
+
+    // 404 Page
+    function NotFound() {
+
+      const navigate = useNavigate();
+
+      return (
+        <div className="container">
+          <div className="not-found">
+
+            <h1>404</h1>
+
+            <h2>Page Not Found</h2>
+
+            <p>
+              The page you are looking for does not exist.
+            </p>
+
+            <button onClick={() => navigate("/")}>
+              Go Home
+            </button>
+
+          </div>
+        </div>
+      );
+    }
+
+
+    // Main App
+    function App() {
+
+      return (
+        <HashRouter>
+
+          <Navigation />
+
+          <Routes>
+
+            <Route
+              path="/"
+              element={<Home />}
+            />
+
+            <Route
+              path="/about"
+              element={<About />}
+            />
+
+            <Route
+              path="/services"
+              element={<Services />}
+            />
+
+            <Route
+              path="/contact"
+              element={<Contact />}
+            />
+
+            <Route
+              path="*"
+              element={<NotFound />}
+            />
+
+          </Routes>
+
+          <footer>
+            React Router Multi-Page App
+          </footer>
+
+        </HashRouter>
+      );
+    }
+
+
+    ReactDOM
+      .createRoot(document.getElementById("root"))
+      .render(<App />);
+
+  </script>
+
+</body>
+</html>
